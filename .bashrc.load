@@ -36,7 +36,6 @@ add_path /bin
 add_path /sbin
 add_path /usr/bin
 add_path /usr/sbin
-add_path /opt/mt/bin
 add_path /opt/sfw/bin
 add_path /usr/local/bin
 add_path /usr/local/sbin
