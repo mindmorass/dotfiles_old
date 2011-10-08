@@ -45,8 +45,7 @@ add_path ~/bin
 add_path ~/perl5/bin
 add_path ~/toolbox/bin
 
-alias ls='ls' # undo any previously set aliases
-for j in $( ls -A $HOME/.bashrc.d )
+for j in $( find ~/.bashrc.d/ -type f -maxdepth 1 )
 do
     . $HOME/.bashrc.d/$j
 done
