@@ -1,7 +1,11 @@
+#!/bin/bash
+
 # load all rsa/dsa keys into ssh-agent
-for key in $( ls $HOME/.ssh/*id_?sa 2> /dev/null ); do
+for key in $( ls $HOME/.ssh/*id_?sa 2> /dev/null )
+do
     ssh-add -l | grep $key &> /dev/null
-    if [ $? != 0 ]; then
+    if [ $? != 0 ]
+    then
         ssh-add $key
     fi
 done
