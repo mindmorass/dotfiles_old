@@ -1,4 +1,1 @@
 # SSH exports and aliases
-
-# short for 19635
-alias mssh='ssh -p 19635'

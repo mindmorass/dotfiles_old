@@ -1,0 +1,11 @@
+# set interface variable
+
+function set_interface_variable() {
+    echo "Select which network interface to export to IFACE"
+    select interface in $( ifconfig -a | awk '$1 ~ /[[:alpha:]][[:digit:]]:/ {gsub(":",""); print $1}' )
+    do
+        echo "Exporting iface to $interface"
+        export IFACE=$interface
+        break
+    done
+}

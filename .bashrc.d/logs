@@ -1,0 +1,1 @@
+alias taillog='tcpdump -n -s0 -i $iface port 514 -v -l -t | awk '\''($1 == "Msg:") {$1=""; sub(".012$", ""); print}'\'''

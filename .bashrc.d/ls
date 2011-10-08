@@ -1,5 +1,6 @@
 #ls alias and exports
 
+# ls colors
 export LS_COLORS='fi=00;00:di=04;33:ln=01;96:mi=31;07:ex=01;32:ow=01;103:su=33;41:sg=33;41:so=01;35:*.pl=00;95:*.php=00;91:*.py=00;91:*.sh=00;91:*.html=00;95:*.js=00;95:*.css=00;95:*.tgz=00;31:*.bz2=00;31:*.gz=00;31:*.tar=00;31:*.log=00;07:*_log=00;07:*.jpg=00;104:*.png=00;104:*.bmp=00;104:*.jpeg=00;104:*.gif=00;104:*.skitch=00;104'
 
 # use coloring for ls and add slashes to directories
@@ -7,5 +8,6 @@ alias ls='ls --color -A -p'
 
 # check for gnu ls (core utils) on OS X
 # coreutils can be installed via homebrew
+# http://mxcl.github.com/homebrew/
 # this should probably check more things like os version and not alias --color if false
 if [ -f /usr/local/bin/gls ]; then alias ls='/usr/local/bin/gls --color -A -p'; fi
