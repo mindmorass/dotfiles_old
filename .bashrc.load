@@ -45,7 +45,23 @@ add_path ~/bin
 add_path ~/perl5/bin
 add_path ~/toolbox/bin
 
-for bashrc_files in $( find ~/.bashrc.d/ -type f -maxdepth 1 )
+# Load individual bashrc files 
+for bashrc_files in $( find $HOME/.bashrc.d/ -type f -maxdepth 1 )
 do
     . $bashrc_files
+done
+
+# Exctract compressed libraries for including unless already extracted
+for libs in $( find $HOME/lib/ -type f -name lib.tgz )
+do
+    DIRECTORY=$( echo $libs | sed -e 's/lib.tgz//' )
+    if [ ! -e $DIRECTORY/.extracted ]
+    then
+        # change to directory and extract if not already extracted
+        tar -C $DIRECTORY -zxf $libs
+        if [ $? == 0 ]
+        then
+            touch $DIRECTORY/.extracted
+        fi
+    fi
 done

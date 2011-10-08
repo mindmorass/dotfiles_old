@@ -1,2 +1,5 @@
 Intuitive Systems
 Wicked Cool Shell Scripts Library
+
+stored in lib.tgz
+- extracted on load unless .extracted exists in directory
