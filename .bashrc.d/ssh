@@ -1,1 +1,4 @@
 # SSH exports and aliases
+
+# ssh bash completion
+. ~/.bash_completion.d/ssh
