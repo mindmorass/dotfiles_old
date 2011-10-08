@@ -1,37 +1,13 @@
-# include what you want
-
-export PATH=$PATH:$HOME/bin
-export TERM=xterm
-export EDITOR=vim
-
 # add this to the .bashrc: . $HOME/.bashrc.load
 
-####
-# put any bash customizations in here
-
-export PS1='[\u@\h]\w$ '
-
-# From /usr/share/doc/bash-3.2/functions/pathfuncs
-# is $1 missing from $2 (or PATH) ?
-no_path() {
-        eval "case :\$${2-PATH}: in *:$1:*) return 1;; *) return 0;; esac"
-}
-# if $1 exists and is not in path, append it
-add_path () {
-  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="\$${2:-PATH}:$1"
-}
-# if $1 exists and is not in path, prepend it
-pre_path () {
-  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="$1:\$${2:-PATH}"
-}
-# if $1 is in path, remove it
-del_path () {
-  no_path $* || eval ${2:-PATH}=`eval echo :'$'${2:-PATH}: |
-    sed -e "s;:$1:;:;g" -e "s;^:;;" -e "s;:\$;;"`
-}
+# Includes
+. $HOME/lib/env_vars/path
+. $HOME/lib/env_vars/ps1
+. $HOME/lib/env_vars/editor
+. $HOME/lib/source_includes
 
 # SET PATH variable as they exist on machines
-#
+export PATH=$HOME/bin
 add_path /bin
 add_path /sbin
 add_path /usr/bin
@@ -41,11 +17,18 @@ add_path /usr/local/bin
 add_path /usr/local/sbin
 add_path /opt/local/bin
 add_path /opt/local/sbin
-add_path ~/bin
-add_path ~/perl5/bin
-add_path ~/toolbox/bin
+add_path $HOME/perl5/bin
+add_path $HOME/toolbox/bin
+
+export PS1=$( get_ps1 )
+export EDITOR=$( get_editor 'vim' )
+export TERM=xterm
+
+####
+# put any bash customizations in here
 
 # Load individual bashrc files 
+#source_files $HOME/.bashrc.d/
 for bashrc_files in $( find $HOME/.bashrc.d/ -type f -maxdepth 1 )
 do
     . $bashrc_files

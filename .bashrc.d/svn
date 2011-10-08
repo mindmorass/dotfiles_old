@@ -3,5 +3,5 @@
 
 if [ -x $( which svn ) ]
 then
-   . ~/.bash_completion.d/svn_completion
+    . $HOME/lib/bash_completion/svn_completion
 fi

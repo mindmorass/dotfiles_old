@@ -1,0 +1,4 @@
+README             - this file
+env_vars           - libs for setting environment variable, such as PS1, PATH
+intuitive_systems  - wicked cool bash scripts library (3rd Party)
+network            - network related libs

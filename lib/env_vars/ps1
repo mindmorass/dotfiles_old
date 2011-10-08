@@ -1,0 +1,16 @@
+#!/bin/bash
+# checks for you choice of Concurrent Versions System of you choice and modifed PS1 variable accordingly
+
+get_ps1 () {
+    
+    local p
+    p='[\u@\h]\w$'
+
+    if [ -x $( which git ) ]
+    then
+        . $HOME/lib/bash_completion/git_completion
+        p='\e[0;33m\][\e[0;0m\]\u@\h \e[0;36m\]\W\e[0;0m\]$(__git_ps1 " (\[\e[0;32m\]%s\e[0;0m\])")\e[0;33m\]]\$\e[0;0m\]'
+    fi
+
+    printf "%s " $p
+}
