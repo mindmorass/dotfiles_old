@@ -1,0 +1,7 @@
+# if svn is installed & executable 
+# add svn completion
+
+if [ -x $( which svn ) ]
+then
+   . ~/.bash_completion.d/svn_completion
+fi

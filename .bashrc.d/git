@@ -1,0 +1,8 @@
+# if git is installed & executable 
+# add git completion and change PS1 to show branches with a splash of color
+
+if [ -x $( which git ) ]
+then
+   . ~/.bash_completion.d/git_completion
+   PS1='\e[0;33m\][\e[0;0m\]\u@\h \e[0;36m\]\W\e[0;0m\]$(__git_ps1 " (\[\e[0;32m\]%s\e[0;0m\])")\e[0;33m\]]\$\e[0;0m\] '
+fi

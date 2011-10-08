@@ -1,219 +1,64 @@
-set nocp
-set ai to shell=/bin/bash terse nowarn sm ruler redraw sw=4 ts=4
-"set noremap
-set hls
-set bs=2
-set history=100
-set bg=dark
-set showmode
-set incsearch
-"set background=dark
-syntax enable
-"set ignorecase
-set smartcase
-set expandtab smarttab
+set t_Co=256
 
-colorscheme ir_black
+syntax on                         " allow vim to overrule with defaults
+set synmaxcol=256                 " Max length of a column for syntax highlighting
+set paste                         " enable paste - no # in front of pasted text
+set pastetoggle=<F8>              " toggle paste so autoindent doesn't jack it up
+set autoindent                    " keep indent on enter presses
+set expandtab
+set tabstop=4                     " make tabs stop at four spaces
+set shiftwidth=4                  " effect auto indent and << >> ==
 
-" for some reason this has to go in .vimrc
-let perl_fold = 1
+set nowrap
+set wrapscan                      " searches wrap around the file
+set showcmd                       " show (partial) command in status line
+set showmatch                     " show matching brackets
 
-" configure syntastic
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_loc_list = 1
+set history=200                   " command history 
+set undolevels=500                " undo history
 
-" from http://github.com/adamhjk/adam-vim
-" nicer status line
-"set laststatus=2
-"set statusline=
-"set statusline+=%-3.3n\ " buffer number
-"set statusline+=%f\ " filename
-"set statusline+=%h%m%r%w " status flags
-"set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
-"set statusline+=%= " right align remainder
-"set statusline+=0x%-8B " character value
-"set statusline+=%-14(%l,%c%V%) " line, character
-"set statusline+=%<%P " file position
+set noerrorbells                  " no dinging
+set visualbell                    " instead give us a visual affect on error (set vb for short)
 
-" http://stackoverflow.com/questions/54255/in-vim-is-there-a-way-to-delete-without-putting-text-in-the-register
-" replaces whatever is visually highlighted with what's in the paste buffer
-"vmap r "_dP
+set shell=bash
+set ff=unix                       " set file format to unix/dos
+set laststatus=2
+set hlsearch                      " hilight searched text
+set wildmenu                      " menu tab completion
+set ignorecase                    " ignore case on searches
 
-" custom surroundings for confluence editing
-" 'l' for literal
-let g:surround_108 = "{{\r}}"
-" 'n' for noformat
-let g:surround_110 = "{noformat}\r{noformat}"
-
-" use command-[jk$0^] to move thorough wrapped lines
-" http://vimcasts.org/episodes/soft-wrapping-text/
-" vmap for visual, nmap for normal mode
-vmap <D-j> gj
-vmap <D-k> gk
-vmap <D-4> g$
-vmap <D-6> g^
-vmap <D-0> g^
-nmap <D-j> gj
-nmap <D-k> gk
-nmap <D-4> g$
-nmap <D-6> g^
-nmap <D-0> g^
-
-" always show 5 lines of context
-set scrolloff=5
-
-" the famous leader character
-let mapleader = ','
-
-set wildmenu
-
-" scroll up and down the page a little faster
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-
-" alias for quit all
-map <leader>d :qa<CR>
-
-" for editing files next to the open one
-" http://vimcasts.org/episodes/the-edit-command/
-noremap <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-" enable pathogen
-filetype off 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
-" turn filetype goodness back on
-filetype on
+filetype on                       " filetype detection 
 filetype plugin on
-filetype indent on
+filetype indent on         
 
-map <F2> :map<CR>
-map <F7> :call ToggleSyntax()<CR>
-map <F8> :set paste!<CR>
-map <F10> :diffu<CR>
-map <F11> :echo 'Current change: ' . changenr()<CR>
-map <F12> :noh<CR>
+" set backup
+" set backupdir=~/.vim_backup       " backup directory for edited files
 
-map <leader>nt :NERDTreeToggle<CR>
-map <leader>nf :NERDTreeFind<CR>
+au WinLeave * set nocursorline    " line and column options: nocursorline nocursorcolumn
+au WinEnter * set cursorline      " line and column options: cursorline cursorcolumn
+set cursorline                    " turn on the cursor line
 
-" Testing aliases
-map ,tv :!./Build test --verbose 1 --test-files %<CR>
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 
-function! ToggleSyntax()
-   if exists("g:syntax_on")
-      syntax off
-   else
-      syntax enable
-   endif
-endfunction
+colorscheme borland
+" colorscheme darkspectrum
+" colorscheme calmar256-dark
 
-runtime macros/matchit.vim
+set ch=2                          " set command line height
+set laststatus=2                  " status line alway 
+set mousehide                     " hide mouse while typing
+" Commands that open folds
+set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
+set scrolloff=8                   " scroll offset, will start scrolling number of lines up
+set virtualedit=all               " Allow the cursor to go in to invalid places
+set incsearch                     " incrementally match the search (live search)
+set complete=.,w,b,t              " completion
+set nocompatible                  " ignore reverse compatibility with vi
+"set hidden                        " show hidden buffers
+set lazyredraw                    " Don't update the display while executing macros
+set showmode                      " show what mode we're in
+set wildmenu                      " enabled enhanced cli completion (works if +wildmenu compiled in) see :help 'wildmenu'
 
-set foldmethod=marker
-highlight Folded ctermbg=black ctermfg=blue
 
-" printing options
-set popt=paper:letter
-set printdevice=dev_np24
-
-" ruby settings
-au BufNewFile,BufRead *.rhtml set sw=2 ts=2 bs=2 et smarttab
-au BufNewFile,BufRead *.rb set sw=2 ts=2 bs=2 et smarttab
-
-" .t files are perl
-au BufNewFile,BufRead *.t set filetype=perl
-
-" tt and mt files are tt2html
-au BufNewFile,BufRead *.tt set filetype=tt2html
-au BufNewFile,BufRead *.mt set filetype=tt2html
-
-map ,cp :%w ! pbcopy<CR>
-
-" older versions of this file contain helpers for HTML, JSP and Java
-
-" fuzzy finder
-let g:fuf_modesDisable = [ 'mrucmd', ]
-let g:fuf_coveragefile_exclude = '\v\~$|blib|\.(o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-let g:fuf_mrufile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|^(\/\/|\\\\|\/mnt\/|\/media\/)|svn-base$'
-let g:fuf_maxMenuWidth = 150
-"let g:fuf_previewHeight = 20
-noremap <leader>ff :FufCoverageFile<CR>
-noremap <leader>fr :FufMruFile<CR>
-noremap <leader>ft :FufTag<CR>
-noremap <leader>fb :FufBuffer<CR>
-
-" sessionman.vim mappings
-noremap <leader>sa :SessionSaveAs<CR>
-noremap <leader>ss :SessionSave<CR>
-noremap <leader>so :SessionOpen 
-noremap <leader>sl :SessionList<CR>
-noremap <leader>sc :SessionClose<CR>
-
-" don't be magical about the _ character in vimR
-let vimrplugin_underscore = 0
-
-" use system clipboard for everything
-if has("gui_running")
-    set cb=unnamed
-endif
-
-" Always do vimdiff in vertical splits
-set diffopt+=vertical
-
-" look for tags
-set tags=./tags;
-
-" use brew's ctags instead of the system one
-if filereadable('/usr/local/bin/ctags')
-    let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
-endif
-
-" tabular mappings (http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:\zs<CR>
-vmap <Leader>a: :Tabularize /:\zs<CR>
-nmap <Leader>a> :Tabularize /=><CR>
-vmap <Leader>a> :Tabularize /=><CR>
-
-" enable persistent undo
-if v:version >= 703
-
-    " ensure undo directory exists
-    if !isdirectory("~/.vimundo")
-        call system("mkdir ~/.vimundo")
-    endif
-
-    set undodir=~/.vimundo
-    set undofile
-    set undolevels=1000
-    set undoreload=10000
-endif
-
-" make searches the most magical
-"nnoremap / /\v
-"vnoremap / /\v
-"noremap :s :s/\v
-
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
-
-" http://stackoverflow.com/questions/7400743/create-a-mapping-for-vims-command-line-that-escapes-the-contents-of-a-register-b
-cnoremap <c-x> <c-r>=<SID>PasteEscaped()<cr>
-function! s:PasteEscaped()
-  echo "\\".getcmdline()."\""
-  let char = getchar()
-  if char == "\<esc>"
-    return ''
-  else
-    let register_content = getreg(nr2char(char))
-    let escaped_register = escape(register_content, '\'.getcmdtype())
-    return substitute(escaped_register, '\n', '\\n', 'g')
-  endif
-endfunction
+set background=dark

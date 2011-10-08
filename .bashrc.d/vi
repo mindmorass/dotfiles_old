@@ -1,0 +1,7 @@
+# vi alias and exports
+
+# if vim is installed alias vi to vim
+if [ -f $( which vim ) ]
+then
+    alias vi='vim'
+fi
