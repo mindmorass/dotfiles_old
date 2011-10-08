@@ -45,7 +45,7 @@ add_path ~/bin
 add_path ~/perl5/bin
 add_path ~/toolbox/bin
 
-for j in $( find ~/.bashrc.d/ -type f -maxdepth 1 )
+for bashrc_files in $( find ~/.bashrc.d/ -type f -maxdepth 1 )
 do
-    . $HOME/.bashrc.d/$j
+    . $bashrc_files
 done
