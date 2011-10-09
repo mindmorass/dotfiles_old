@@ -29,21 +29,17 @@ export TERM=xterm
 
 # Load individual bashrc files 
 #source_files $HOME/.bashrc.d/
-for bashrc_files in $( find $HOME/.bashrc.d/ -type f -maxdepth 1 )
-do
+for bashrc_files in $( find $HOME/.bashrc.d/ -type f -maxdepth 1 ); do
     . $bashrc_files
 done
 
 # Exctract compressed libraries for including unless already extracted
-for libs in $( find $HOME/lib/ -type f -name lib.tgz )
-do
+for libs in $( find $HOME/lib/ -type f -name lib.tgz ); do
     DIRECTORY=$( echo $libs | sed -e 's/lib.tgz//' )
-    if [ ! -e $DIRECTORY/.extracted ]
-    then
+    if [ ! -e $DIRECTORY/.extracted ]; then
         # change to directory and extract if not already extracted
         tar -C $DIRECTORY -zxf $libs
-        if [ $? == 0 ]
-        then
+        if [ $? == 0 ]; then
             touch $DIRECTORY/.extracted
         fi
     fi
