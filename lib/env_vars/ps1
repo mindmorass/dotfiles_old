@@ -2,15 +2,13 @@
 # checks for you choice of Concurrent Versions System of you choice and modifed PS1 variable accordingly
 
 get_ps1 () {
-    
     local p
+    . $HOME/lib/intuitive_systems/011-colors.sh
     p='[\u@\h]\w$'
-
-    if [ -x $( which git ) ]
-    then
+    if [ -x $( which git ) ]; then
         . $HOME/lib/bash_completion/git_completion
-        p='\e[0;33m\][\e[0;0m\]\u@\h \e[0;36m\]\W\e[0;0m\]$(__git_ps1 " (\[\e[0;32m\]%s\e[0;0m\])")\e[0;33m\]]\$\e[0;0m\]'
+        ##p='[\u@\h \W$(__git_ps1 " (%s)" )]\$ '
+        p="${yellowf}"'['"${boldon}${whitef}"'\u@\h '"${boldoff}${cyanf}\W${whitef}"'$( __git_ps1 " ('"${greenf}%s${reset}"')" )'"${yellowf}]${boldon}${redf}\$${reset}"
     fi
-
     printf "%s " $p
 }
