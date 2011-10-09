@@ -1,0 +1,115 @@
+#!/bin/bash
+# get a list of file, directores or both from a directory
+
+FILES=''
+
+if [ -x $( which find ) ]; then
+    SEARCH_BIN=$( which find )
+    SEARCH_NAME='find'
+else
+    SEARCH_BIN=$( which ls )
+    SEARCH_NAME='ls'
+fi
+
+get_all () {
+    local path=$1
+    local filter=$2
+    local results=$( __scan_dir 'all' $path $filter )
+    printf "%s " $results
+}
+
+get_files () {
+    local path=$1
+    local filter=$2
+    local results=$( __scan_dir 'file' $path $filter )
+    printf "%s " $results
+}
+
+get_directories () {
+    local path=$1
+    local filter=$2
+    local results=$( __scan_dir 'dir' $path $filter )
+    printf "%s " $results
+}
+
+__scan_dir () {
+    if [ -z $2 ]; then
+        printf "%s" "FAIL: Search path is not set!"
+    else
+        local search_path=$2
+    fi
+
+    if [ -n $3 ]; then
+        local search_filter=$3
+    fi
+
+    case $1 in
+        'file')
+            local search_flags=$( __get_search_flags 'file' $search_filter )
+            SEARCH_CMD=$( "$SEARCH_BIN $search_path $search_flags" )
+            printf "%s" $SEARCH_CMD
+        ;;
+        'dir')
+            local search_flags=$( __get_search_flags 'dir' $search_filter )
+            SEARCH_CMD=$( "$SEARCH_BIN $search_path $search_flags" )
+            printf "%s" $SEARCH_CMD
+        ;;
+        *)
+            local search_flags=$( __get_search_flags 'all' )
+            SEARCH_CMD=$( "$SEARCH_BIN $search_path" )
+            printf "%s" $SEARCH_CMD
+        ;;
+    esac
+
+
+}
+
+__get_search_flags () {
+    local search_type=$1
+    local search_filter=$2
+    local flags=''
+
+    case $SEARCH_NAME in
+        'find')
+            if [ $search_type == 'file' ]; then
+                flags=" -type f -maxdepth 1"
+            else
+                flags=" -type d -maxdepth 1"
+            fi
+
+            if [ ! -z $search_filter ]; then
+                flags="$flags -iname $search_filter"
+            fi
+
+            printf "%s " $flags
+        ;;
+        'ls')
+            if [ $search_type == 'file' ]; then
+                flags=" -p | grep -v '/'"
+            else
+                flags=" -p | grep '/'"
+            fi
+
+            if [ -n $search_filter ]; then
+                flags="$flags | grep $search_filter"
+            fi
+
+            printf "%s " $flags
+        ;;
+        *)
+            # INCOMPLETE (all)
+            if [ $search_type == 'file' ]; then
+                flags=""
+            else
+                flags=" -d"
+            fi
+
+            if [ -n $search_filter ]; then
+                flags="$flags | grep $search_filter"
+            fi
+
+            flags=''
+            printf "%s " $flags
+        ;;
+    esac
+}
