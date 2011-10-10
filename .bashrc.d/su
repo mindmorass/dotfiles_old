@@ -1,0 +1,7 @@
+#preserve environment so colors and the like when becoming root or other users
+#remember to use '-' if you don't like it
+
+# su missing -p in OS X, we'll leave it alone
+if [ $OS != 'Darwin' ]; then
+    alias su="su -p"
+fi
