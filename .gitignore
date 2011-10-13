@@ -1,3 +1,11 @@
 *.sw?
-.bash_it
-.oh-my-zsh
+
+# Ignore bash_it framework (seperate git repo)
+# only manage the README.md file
+.bash_it/*
+!.bash_it/README.md
+
+# Ignore oh-my-zsh framework (seperate git repo)
+# only manage the README.md file
+.oh-my-zsh/*
+!.oh-my-zsh/README.md
