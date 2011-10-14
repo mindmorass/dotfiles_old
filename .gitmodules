@@ -1,0 +1,6 @@
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = git@github.com:mindmorass/oh-my-zsh.git
+[submodule ".bash-it"]
+	path = .bash-it
+	url = git@github.com:mindmorass/bash-it.git
