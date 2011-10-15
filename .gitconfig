@@ -1,6 +1,7 @@
 [user]
 	name = mindmorass
 	email = mindmorass@gmail.com
+
 [color]
 	diff = auto
 	status = auto
@@ -8,6 +9,26 @@
 	interactive = auto
 	ui = true
 	pager = true
+
+[color "diff"]
+    new = green bold
+    old = yellow
+    frag = cyan
+    meta = red bold
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "branch"]
+    current = cyan reverse white bold
+    local = cyan
+    remote = green
+
+[color "status"]
+    added = green bold
+    changed = yellow
+    untracked = white bold red
+
 [alias]
 	st = status
 	ss = status --short
@@ -23,13 +44,18 @@
 	showdiff = "!sh -c 'git difftool --tool=vimdiff -y $1^ $1' -"
 	lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
     x = "!gitx"
+
 [merge]
 	tool = vimdiff
+
 [diff]
 	tool = opendiff
+
 [difftool]
 	prompt = false
+
 [push]
 	default = matching
+
 [core]
 	excludesfile = ~/.gitignore.global
