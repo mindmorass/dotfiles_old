@@ -1,0 +1,59 @@
+#!/bin/bash
+
+if [ ! -x "$( which exim )" ]; then
+    echo "exim is not in PATH or not installed on this system"
+    echo "exiting"
+    exit
+fi
+
+IFS="$(echo -e "\n\r")"
+printf "%s\n" "Exim Service Menu"
+echo
+printf "%s\n" "What would you like to do?"
+
+select user_selection in $( cat $HOME/etc/services/exim ); do
+    case $user_selection in
+        1)
+            exim -bp | exiqsumm     
+        ;;
+        2)
+            for i in $( exipick -i ); do exim -Mvh $i | awk '$2=="Sender:" {print $4}'; done | sort | uniq -c | sort -rn | head -10
+        ;;
+        3)
+            for i in $( exipick -i ); do exim -Mvh $i | awk '$2=="From:" {print $4}'; done | sort | uniq -c | sort -rn | head -10
+        ;;
+        4)
+            for i in $( exipick -i ); do exim -Mvh $i | awk '$2=="X-Authenticated-User:" {print $4}'; done | sort | uniq -c | sort -rn | head -10
+        ;;
+        5)
+            exiqgrep -o 432000 -i
+        ;;
+        6)
+            exiqgrep -o 432000 -i | xargs exim -Mrm
+        ;;
+        7)
+            exipick -zi | xargs exim -Mrm
+        ;;
+        8)
+            $empty_count=0
+            for i in $( exipick | grep "<>" | awk '{print $3}' ); do exim -Mrm $i; $empty_count=$(( $empty_count + 1 )); done
+            echo "Total: ${empty_count}"
+        ;;
+        9)
+            for i in $( exipick | grep "<>" | awk '{print $3}' ); do exim -Mrm $i; done
+        ;;
+    esac
+done
+
+
+#1 summary of messages in queue
+#2 show top 10 senders   ( header - Sender:)
+#2 show top 10 senders   ( header - From:)
+#4 show top 10 senders   ( header - X-Authenticated-User )
+#5 show message ID's older than 5 days 
+#6 remove messages older than 5 days
+#7 flush frozen messages from queue
+#8 show messages with empty envelope headers
+#9 clear out empty envelope messages ( check with 8 - use carefully )
+
+#8 stats (eximstats) -- needs more work
