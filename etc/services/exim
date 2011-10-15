@@ -1,0 +1,5 @@
+top 10 senders
+top 10 receivers
+flush frozen messages from queue
+show message older than 1 day 
+show top 10 Authenticated-User senders
