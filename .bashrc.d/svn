@@ -1,7 +1,0 @@
-# if svn is installed & executable 
-# add svn completion
-
-if [ -x $( which svn ) ]
-then
-    . $HOME/lib/bash_completion/svn_completion
-fi

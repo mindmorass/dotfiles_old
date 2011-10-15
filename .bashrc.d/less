@@ -1,4 +1,0 @@
-# less alias and exports
-
-# ascii colors for less
-if [ -f $( which less ) ]; then alias less='less -R'; fi 

@@ -1,7 +1,0 @@
-# if git is installed & executable 
-# add git completion and change PS1 to show branches with a splash of color
-
-if [ -x $( which git ) ]
-then
-    . $HOME/lib/bash_completion/git_completion
-fi

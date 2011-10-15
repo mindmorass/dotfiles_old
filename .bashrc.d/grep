@@ -1,5 +1,0 @@
-# grep exports and aliases
-export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='07;92'    # Legacy grep color support
-export GREP_COLORS='ms=01;32:mc=01;32:sl=:cx=:fn=35:ln=31:bn=31:se=36'    # Newer var for colors
-
