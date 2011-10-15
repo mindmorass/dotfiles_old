@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# use tcpdump as a MySQL logger
+# handy when you don't have user
+# found this in some forum, sorry that to the author, I didn't collect their name
+
+if [ -z $IFACE ]; then
+    echo 'Make sure to export the $IFACE variable to a suitable interface'
+fi
+
+tcpdump -i $IFACE -s 0 -l -w - dst port 3306 | strings | perl -e '
+while(<>) { chomp; next if /^[^ ]+[ ]*$/;                                                                                                                            
+if(/^(SELECT|UPDATE|DELETE|INSERT|SET|COMMIT|ROLLBACK|CREATE|DROP|ALTER)/i) {
+if (defined $q) { print "$q\n"; }
+$q=$_;
+} else {
+$_ =~ s/^[ \t]+//; $q.=" $_";
+}
+}'
