@@ -11,8 +11,28 @@ printf "%s\n" "Exim Service Menu"
 echo
 printf "%s\n" "What would you like to do?"
 
-select user_selection in $( cat $HOME/etc/services/exim ); do
-    case $user_selection in
+show_menu () {
+    echo "======================="
+    echo "| exim services tasks |"
+    echo "======================="
+    counter=1
+    for i in $( cat $HOME/etc/services/exim ); do
+        echo "$counter) $i"
+        counter=$(( $counter + 1 ))
+    done
+}
+
+# this needs a quick re-write with heiarchy in mind - will make menu more efficient
+# show
+#   - subtasks
+#     - delete
+#     - deeper look
+#     - export
+
+while [ 1 ]; do
+    show_menu
+    read CHOICE
+    case "$CHOICE" in
         1)
             exim -bp | exiqsumm     
         ;;
@@ -35,7 +55,7 @@ select user_selection in $( cat $HOME/etc/services/exim ); do
             exipick -zi | xargs exim -Mrm
         ;;
         8)
-            $empty_count=0
+            empty_count=0
             for i in $( exipick | grep "<>" | awk '{print $3}' ); do exim -Mrm $i; $empty_count=$(( $empty_count + 1 )); done
             echo "Total: ${empty_count}"
         ;;
@@ -43,6 +63,12 @@ select user_selection in $( cat $HOME/etc/services/exim ); do
             for i in $( exipick | grep "<>" | awk '{print $3}' ); do exim -Mrm $i; done
         ;;
     esac
+
+    echo
+    echo
+    echo
+    echo
+    echo
 done
 
 
