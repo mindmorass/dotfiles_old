@@ -1,9 +1,0 @@
-summary of messages in queue
-show top 10 senders   ( header - Sender:)
-show top 10 senders   ( header - From:)
-show top 10 senders   ( header - X-Authenticated-User )
-show message ID's older than 5 days 
-remove messages older than 5 days
-flush frozen messages from queue
-show messages with empty envelope headers
-clear out empty envelope messages ( check with 8 - use carefully )
